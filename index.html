@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple To Do List</title>
+
+  <link rel="stylesheet" href="./dist/app.css">
+</head>
+
+<body class="bg-violet-300">
+  <div class="flex h-screen justify-center items-center">
+    <div x-data="toDoList()" x-init="connect()" class="bg-white rounded-lg shadow-md p-5 w-10/12 lg:w-3/4 lg:max-w-lg">
+      <div class="mb-5">
+        <h1 class="font-bold text-2xl">Todo List</h1>
+        <form  class="flex flex-wrap mt-5">
+          <input x-model="input" type="text" class="border-2 border-gray-400 shadow rounded lg:w-10/12 w-9/12 py-2 px-3 mr-4" placeholder="Add Todo"></input>
+          <button type="submit" @click="addToDo()" class="shrink-0 p-2 border-2 rounded border-violet-400 text-violet-400 hover:text-white hover:bg-violet-400" >Add</button>
+        </form>
+      </div>
+      <div class="mb-10">
+        <span x-show="taskList.length <= 0" class="mb-5">No tasks added</span>
+        <div x-show="taskList.length > 0">
+          <div class="mb-2">
+            <span x-text="`${taskList.length} task`"></span>
+          </div>
+          
+          <template x-for="task in taskList">
+            <div class="flex items-center">
+              <input class="text-blue-600 w-4 h-4 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mr-3" type="checkbox" x-model="task.completed">
+              <div x-text="task.task" class="text-xl font" :class="{ 'line-through text-violet-400': task.completed }"></div>
+            </div>
+          </template>
+        </div>
+        
+      </div>
+
+      <div class="flex justify-end space-x-4" x-show="taskList.length > 0">
+        <button 
+          class="px-3 py-2 border border-violet-400 text-violet-400 rounded-md hover:bg-violet-500 hover:text-white"
+          @click="clearAllTasks()"> 
+          CLEAR ALL
+        </button>
+        <button 
+          class="px-3 py-2 border border-violet-400 text-violet-400 rounded-md hover:bg-violet-500 hover:text-white"
+          @click="clearCompletedTasks()"> 
+          CLEAR COMPLETED
+        </button>
+      </div>
+    </div> 
+  </div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.11.1/dist/cdn.min.js"></script>
+  <script src="./dist/app.js"></script>
+</body>
+
+</html>
